@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Applicants List</title>
+</head>
+<body>
+<h2>All Applicants</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="applicant : ${applicants}">
+        <td th:text="${applicant.id}"></td>
+        <td th:text="${applicant.fullName}"></td>
+        <td th:text="${applicant.email}"></td>
+        <td th:text="${applicant.phone}"></td>
+        <td>
+            <a th:href="@{'/admin/applicants/' + ${applicant.id}}">View Details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<a th:href="@{/admin/dashboard}">Back to Dashboard</a>
+</body>
+</html>

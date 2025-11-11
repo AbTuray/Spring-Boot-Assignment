@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Applicant Details</title>
+</head>
+<body>
+<h2>Applicant Details</h2>
+
+<div>
+  <p><strong>Full Name:</strong> <span th:text="${applicant.fullName}"></span></p>
+  <p><strong>Email:</strong> <span th:text="${applicant.email}"></span></p>
+  <p><strong>Phone:</strong> <span th:text="${applicant.phone}"></span></p>
+  <p><strong>Address:</strong> <span th:text="${applicant.address}"></span></p>
+</div>
+
+<hr/>
+
+<div>
+  <h3>Resume Details</h3>
+  <div th:if="${resume != null}">
+    <p><strong>Skills:</strong> <span th:text="${resume.skills}"></span></p>
+    <p><strong>Experience:</strong> <span th:text="${resume.experience}"></span></p>
+    <p><strong>Resume File:</strong>
+      <a th:href="@{'/admin/applicants/' + ${applicant.id} + '/resume/download'}"
+         th:text="${#strings.substring(resume.fileName, resume.fileName.lastIndexOf('/') + 1)}"></a>
+    </p>
+  </div>
+  <div th:if="${resume == null}">
+    <p>No resume uploaded yet.</p>
+  </div>
+</div>
+
+<br/>
+<a th:href="@{/admin/applicants}">Back to Applicant List</a>
+</body>
+</html>

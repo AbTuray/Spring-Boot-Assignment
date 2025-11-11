@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Job Form</title>
+</head>
+<body>
+<h2 th:text="${job.id == null ? 'Add Job' : 'Edit Job'}"></h2>
+
+<form th:action="@{/admin/jobs/save}" th:object="${job}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+
+  <label>Title:</label>
+  <input type="text" th:field="*{title}" required/><br/>
+
+  <label>Description:</label>
+  <textarea th:field="*{description}" required></textarea><br/>
+
+  <label>Location:</label>
+  <input type="text" th:field="*{location}" required/><br/>
+
+  <label>Status:</label>
+  <input type="text" th:field="*{status}" required/><br/>
+
+  <button type="submit">Save</button>
+</form>
+
+<a th:href="@{/admin/jobs}">Back</a>
+</body>
+</html>

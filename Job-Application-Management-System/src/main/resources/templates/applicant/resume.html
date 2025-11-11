@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>My Resume</title>
+</head>
+<body>
+<h2>My Resume</h2>
+
+<div th:if="${success}" th:text="${success}" style="color:green"></div>
+<div th:if="${error}" th:text="${error}" style="color:red"></div>
+
+<form th:action="@{/applicant/resume/upload}" method="post" enctype="multipart/form-data">
+  <label>Skills:</label><br/>
+  <input type="text" name="skills" th:value="${resume.skills}" required><br/><br/>
+
+  <label>Experience:</label><br/>
+  <textarea name="experience" rows="3" cols="30" required th:text="${resume.experience}"></textarea><br/><br/>
+
+  <label>Select Resume File (PDF/DOC):</label><br/>
+  <input type="file" name="file" accept=".pdf,.doc,.docx" required><br/><br/>
+
+  <button type="submit">Upload Resume</button>
+</form>
+
+<div th:if="${resume.fileName != null}">
+  <p><strong>Uploaded File:</strong>
+    <a th:href="@{/applicant/resume/download}" th:text="${#strings.substring(resume.fileName, resume.fileName.lastIndexOf('/') + 1)}"></a>
+  </p>
+</div>
+
+<br/>
+<a th:href="@{/applicant/dashboard}">Back to Dashboard</a>
+</body>
+</html>

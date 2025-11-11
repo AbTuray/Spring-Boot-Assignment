@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Job Management</title>
+</head>
+<body>
+<h2>Job List</h2>
+
+<a th:href="@{/admin/jobs/new}">Add New Job</a>
+<br/><br/>
+
+<table border="1">
+  <tr>
+    <th>ID</th><th>Title</th><th>Location</th><th>Status</th><th>Actions</th>
+  </tr>
+  <tr th:each="job : ${jobs}">
+    <td th:text="${job.id}"></td>
+    <td th:text="${job.title}"></td>
+    <td th:text="${job.location}"></td>
+    <td th:text="${job.status}"></td>
+    <td>
+      <a th:href="@{'/admin/jobs/edit/' + ${job.id}}">Edit</a> |
+      <a th:href="@{'/admin/jobs/delete/' + ${job.id}}" onclick="return confirm('Delete this job?')">Delete</a>
+    </td>
+  </tr>
+</table>
+
+<div th:if="${success}" th:text="${success}" style="color:green"></div>
+<div th:if="${error}" th:text="${error}" style="color:red"></div>
+</body>
+</html>
