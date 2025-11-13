@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resumes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .nav-links {
+            margin: 20px 0;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .resume-content {
+            max-width: 400px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 14px;
+        }
+        .no-resume {
+            color: #888;
+            font-style: italic;
+        }
+        .btn {
+            display: inline-block;
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+<h1>Resumes</h1>
+
+<div class="nav-links">
+    <a th:href="@{/applicants}">Applicants</a> |
+    <a th:href="@{/jobs}">Jobs</a> |
+    <a th:href="@{/applications}">Applications</a> |
+    <a th:href="@{/logout}">Logout</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Applicant</th>
+        <th>Resume Content</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="resume : ${resumes}">
+        <td th:text="${resume.id}"></td>
+        <td th:text="${resume.applicant?.name} ?: 'Unknown'"></td>
+        <td class="resume-content">
+            <span th:if="${resume.content != null}" th:text="${resume.content}"></span>
+            <span th:if="${resume.content == null}" class="no-resume">No resume uploaded</span>
+        </td>
+        <td>
+            <a th:if="${resume.applicant != null}"
+               th:href="@{/applicants/{id}/resume(id=${resume.applicant.id})}"
+               class="btn">Edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:if="${resumes == null or #lists.isEmpty(resumes)}">
+    <p>No resumes found.</p>
+</div>
+</body>
+</html>

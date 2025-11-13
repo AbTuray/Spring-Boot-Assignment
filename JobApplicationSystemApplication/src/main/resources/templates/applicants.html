@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Applicants</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        form { margin-bottom: 20px; }
+        input { padding: 5px; }
+        button { background: #28a745; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<h1>Applicants</h1>
+<a href="/applicants/new">Add New Applicant</a>
+<form action="/applicants" method="get">
+    <input type="text" name="keyword" placeholder="Search by name or email" />
+    <button type="submit">Search</button>
+</form>
+<table>
+    <tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr>
+    <tr th:each="applicant : ${applicants}">
+        <td th:text="${applicant.id}"></td>
+        <td th:text="${applicant.name}"></td>
+        <td th:text="${applicant.email}"></td>
+        <td>
+            <a th:href="@{/applicants/edit/{id}(id=${applicant.id})}">Edit</a> |
+            <a th:href="@{/applicants/delete/{id}(id=${applicant.id})}">Delete</a> |
+            <a th:href="@{/applicants/{id}/resume(id=${applicant.id})}">Add/Edit Resume</a> |
+            <!-- Form to add application -->
+            <form th:action="@{/applicants/{applicantId}/add-application(applicantId=${applicant.id})}" method="post" style="display:inline;">
+                <select name="jobId">
+                    <option th:each="job : ${jobs}" th:value="${job.id}" th:text="${job.title}"></option>
+                </select>
+                <input type="text" name="status" placeholder="Status" required />
+                <button type="submit">Add Application</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a href="/logout">Logout</a>
+</body>
+</html>

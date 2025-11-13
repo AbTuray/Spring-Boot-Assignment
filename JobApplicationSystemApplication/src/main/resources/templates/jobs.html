@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Jobs</title>
+    <style> /* Same */ </style>
+</head>
+<body>
+<h1>Jobs</h1>
+<a href="/jobs/new">Add New Job</a>
+<table>
+    <tr><th>ID</th><th>Title</th><th>Description</th><th>Actions</th></tr>
+    <tr th:each="job : ${jobs}">
+        <td th:text="${job.id}"></td>
+        <td th:text="${job.title}"></td>
+        <td th:text="${job.description}"></td>
+        <td>
+            <a th:href="@{/jobs/edit/{id}(id=${job.id})}">Edit</a> |
+            <a th:href="@{/jobs/delete/{id}(id=${job.id})}">Delete</a> |
+            <!-- Form to add applicant -->
+            <form th:action="@{/jobs/{jobId}/add-applicant(jobId=${job.id})}" method="post" style="display:inline;">
+                <select name="applicantId">
+                    <option th:each="applicant : ${applicants}" th:value="${applicant.id}" th:text="${applicant.name}"></option>
+                </select>
+                <input type="text" name="status" placeholder="Status" required />
+                <button type="submit">Add Applicant</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

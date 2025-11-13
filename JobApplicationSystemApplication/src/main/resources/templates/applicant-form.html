@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Applicant Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        form { max-width: 400px; margin: auto; padding: 20px; background: white; border: 1px solid #ddd; border-radius: 5px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        button { background: #28a745; color: white; border: none; padding: 10px; cursor: pointer; }
+        button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+<h1 th:if="${applicant.id == null}">Add Applicant</h1>
+<h1 th:if="${applicant.id != null}">Update Applicant</h1>
+<form th:action="@{/applicants}" th:object="${applicant}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <input type="text" th:field="*{name}" placeholder="Name" required />
+    <input type="email" th:field="*{email}" placeholder="Email" required />
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

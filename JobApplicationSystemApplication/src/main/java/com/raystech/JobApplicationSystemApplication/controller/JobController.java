@@ -17,9 +17,16 @@ public class JobController {
     @Autowired
     private ApplicantManager applicantService;
 
+//    @GetMapping("/jobs")
+//    public String listJobs(Model model) {
+//        model.addAttribute("jobs", service.findAll());
+//        return "jobs";
+//    }
+
     @GetMapping("/jobs")
     public String listJobs(Model model) {
         model.addAttribute("jobs", service.findAll());
+        model.addAttribute("applicants", applicantService.findAll()); // Add this
         return "jobs";
     }
 

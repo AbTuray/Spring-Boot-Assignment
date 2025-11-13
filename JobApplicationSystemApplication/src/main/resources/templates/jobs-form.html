@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:if="${job.id == null}">Add Job</title>
+    <title th:if="${job.id != null}">Update Job</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .btn-group {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:if="${job.id == null}">Add New Job</h1>
+    <h1 th:if="${job.id != null}">Update Job</h1>
+
+    <form th:action="@{/jobs}" th:object="${job}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <label for="title">Job Title</label>
+        <input type="text" id="title" th:field="*{title}" placeholder="Enter job title" required />
+
+        <label for="description">Description</label>
+        <textarea id="description" th:field="*{description}" placeholder="Enter job description" required></textarea>
+
+        <div class="btn-group">
+            <button type="submit">Save Job</button>
+        </div>
+    </form>
+
+    <a th:href="@{/jobs}" class="back-link">Back to Jobs List</a>
+</div>
+</body>
+</html>

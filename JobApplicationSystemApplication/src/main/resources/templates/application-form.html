@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Application Form</title>
+    <style> /* Same as above */ </style>
+</head>
+<body>
+<h1 th:if="${application.id == null}">Add Application</h1>
+<h1 th:if="${application.id != null}">Update Application</h1>
+<form th:action="@{/applications}" th:object="${application}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <select name="applicantId">
+        <option th:each="applicant : ${applicants}" th:value="${applicant.id}" th:text="${applicant.name}"></option>
+    </select>
+    <select name="jobId">
+        <option th:each="job : ${jobs}" th:value="${job.id}" th:text="${job.title}"></option>
+    </select>
+    <input type="text" th:field="*{status}" placeholder="Status" required />
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

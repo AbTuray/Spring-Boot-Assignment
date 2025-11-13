@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resume Form</title>
+    <style> /* Same */ </style>
+</head>
+<body>
+<h1>Add/Edit Resume</h1>
+<form th:action="@{/applicants/{applicantId}/resume(applicantId=${applicantId})}" method="post">
+    <textarea name="content" th:text="${resume.content}" placeholder="Resume Content" rows="10" style="width:100%;"></textarea>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
