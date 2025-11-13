@@ -24,13 +24,15 @@ public class ApplicationController {
     @Autowired
     private JobManager jobService;
 
-    @GetMapping("/applications")
+//    @GetMapping("/applications")
+    @RequestMapping(value = "applications", method = RequestMethod.GET)
     public String listApplications(Model model) {
         model.addAttribute("applications", service.findAll());
         return "applications";
     }
 
-    @GetMapping("/applications/new")
+//    @GetMapping("/applications/new")
+    @RequestMapping(value = "applications/new", method = RequestMethod.GET)
     public String newApplicationForm(Model model) {
         model.addAttribute("application", new Application());
         model.addAttribute("applicants", applicantService.findAll());
@@ -38,7 +40,8 @@ public class ApplicationController {
         return "application-form";
     }
 
-    @PostMapping("/applications")
+//    @PostMapping("/applications")
+    @RequestMapping(value = "applications", method = RequestMethod.POST)
     public String saveApplication(@ModelAttribute Application application, @RequestParam Long applicantId, @RequestParam Long jobId) {
         Applicant applicant = applicantService.findById(applicantId).orElseThrow();
         Job job = jobService.findById(jobId).orElseThrow();
@@ -48,7 +51,8 @@ public class ApplicationController {
         return "redirect:/applications";
     }
 
-    @GetMapping("/applications/edit/{id}")
+//    @GetMapping("/applications/edit/{id}")
+    @RequestMapping(value = "applications/edit/{id}", method = RequestMethod.GET)
     public String editApplicationForm(@PathVariable Long id, Model model) {
         model.addAttribute("application", service.findById(id).orElseThrow());
         model.addAttribute("applicants", applicantService.findAll());
@@ -56,14 +60,16 @@ public class ApplicationController {
         return "application-form";
     }
 
-    @GetMapping("/applications/delete/{id}")
+//    @GetMapping("/applications/delete/{id}")
+    @RequestMapping(value = "applications/delete/{id}", method = RequestMethod.GET)
     public String deleteApplication(@PathVariable Long id) {
         service.deleteById(id);
         return "redirect:/applications";
     }
 
     // Endpoint for adding application to applicant (from applicant page, e.g.)
-    @PostMapping("/applicants/{applicantId}/add-application")
+//    @PostMapping("/applicants/{applicantId}/add-application")
+    @RequestMapping(value = "applicants/{applicantId}/add-application", method = RequestMethod.POST)
     public String addApplicationToApplicant(@PathVariable Long applicantId, @RequestParam Long jobId, @RequestParam String status) {
         service.addApplicationToApplicantAndJob(applicantId, jobId, status);
         return "redirect:/applicants";

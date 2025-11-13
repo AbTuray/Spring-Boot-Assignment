@@ -18,44 +18,44 @@ public class JobController {
     private ApplicantManager applicantService;
 
 //    @GetMapping("/jobs")
-//    public String listJobs(Model model) {
-//        model.addAttribute("jobs", service.findAll());
-//        return "jobs";
-//    }
-
-    @GetMapping("/jobs")
+    @RequestMapping(value = "jobs", method = RequestMethod.GET)
     public String listJobs(Model model) {
         model.addAttribute("jobs", service.findAll());
         model.addAttribute("applicants", applicantService.findAll()); // Add this
         return "jobs";
     }
 
-    @GetMapping("/jobs/new")
+//    @GetMapping("/jobs/new")
+    @RequestMapping(value = "jobs/new", method = RequestMethod.GET)
     public String newJobForm(Model model) {
         model.addAttribute("job", new Job());
         return "job-form";
     }
 
-    @PostMapping("/jobs")
+//    @PostMapping("/jobs")
+    @RequestMapping(value = "jobs", method = RequestMethod.POST)
     public String saveJob(@ModelAttribute Job job) {
         service.save(job);
         return "redirect:/jobs";
     }
 
-    @GetMapping("/jobs/edit/{id}")
+//    @GetMapping("/jobs/edit/{id}")
+    @RequestMapping(value = "jobs/edit/{id}", method = RequestMethod.GET)
     public String editJobForm(@PathVariable Long id, Model model) {
         model.addAttribute("job", service.findById(id).orElseThrow());
         return "job-form";
     }
 
-    @GetMapping("/jobs/delete/{id}")
+//    @GetMapping("/jobs/delete/{id}")
+    @RequestMapping(value = "jobs/delete/{id}", method = RequestMethod.GET)
     public String deleteJob(@PathVariable Long id) {
         service.deleteById(id);
         return "redirect:/jobs";
     }
 
     // Add applicant to job
-    @PostMapping("/jobs/{jobId}/add-applicant")
+//    @PostMapping("/jobs/{jobId}/add-applicant")
+    @RequestMapping(value = "jobs/{jobId}/add-applicant", method = RequestMethod.POST)
     public String addApplicantToJob(@PathVariable Long jobId, @RequestParam Long applicantId, @RequestParam String status) {
         service.addApplicantToJob(jobId, applicantId, status);
         return "redirect:/jobs";

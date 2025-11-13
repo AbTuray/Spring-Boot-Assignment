@@ -3,6 +3,7 @@ package com.raystech.JobApplicationSystemApplication.service;
 import com.raystech.JobApplicationSystemApplication.entity.Job;
 import com.raystech.JobApplicationSystemApplication.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class JobManager implements JobService{
     private JobRepository repository;
 
     @Autowired
+    @Lazy
     private ApplicationManager applicationService;
 
     public List<Job> findAll() {
